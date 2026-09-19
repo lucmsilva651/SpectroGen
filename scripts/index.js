@@ -1,3 +1,17 @@
+/*
+  FIXME: Monolithic code
+  5AM project so everything is mashed together.
+
+  Since UI is mostly vibecoded (I do not know
+  anything about design and I didnt want an MVP,
+  the spectrum generation logic is mine), AI
+  made all code be in one file. Please fix it
+  yourself if you want to maintain this code
+  because I don't have time for that.
+
+  www.lucmsilva.com
+*/
+
 const DEFAULT_FREQUENCY_MIN_HZ = 30
 const DEFAULT_FREQUENCY_MAX_HZ = 16000
 const MIN_FREQUENCY_GAP_HZ = 10
