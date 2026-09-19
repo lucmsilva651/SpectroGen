@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Spectrogram Generator</title>
+    <link rel="stylesheet" href="styles/index.css" />
+    <script src="scripts/index.js" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght,XOPQ,XTRA,YOPQ,YTDE,YTFI,YTLC,YTUC@8..144,100..1000,96,468,79,-203,738,514,712&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body data-stage="empty">
+    <div id="app" class="app">
+      <aside class="sidebar">
+        <header class="app-header">
+          <h1 class="page-title">Spectrogram Generator</h1>
+          <p class="page-lead">
+            Tool for making spectrogram for one or multiple audio files
+          </p>
+        </header>
+
+        <label class="file-drop">
+          <input
+            id="file-input"
+            class="file-drop-input"
+            type="file"
+            accept="audio/*"
+            multiple
+          />
+          <span>Choose audio files</span>
+        </label>
+
+        <ul id="track-list" class="track-list"></ul>
+
+        <section class="settings">
+          <label class="field"
+            >Width<input
+              id="setting-width"
+              class="field-input"
+              type="number"
+              value="1280"
+              min="320"
+              step="2"
+          /></label>
+          <label class="field"
+            >Height<input
+              id="setting-height"
+              class="field-input"
+              type="number"
+              value="720"
+              min="180"
+              step="2"
+          /></label>
+          <label class="field"
+            >FPS<input
+              id="setting-fps"
+              class="field-input"
+              type="number"
+              value="60"
+              min="15"
+              max="120"
+          /></label>
+          <label class="field"
+            >Scroll px/frame<input
+              id="setting-scroll-step"
+              class="field-input"
+              type="number"
+              value="2"
+              min="1"
+              max="8"
+          /></label>
+          <label class="field">
+            Min Hz
+            <input
+              id="setting-min-hz"
+              class="field-input"
+              type="number"
+              value="30"
+              min="1"
+              step="1"
+            />
+          </label>
+          <label class="field">
+            Max Hz
+            <input
+              id="setting-max-hz"
+              class="field-input"
+              type="number"
+              value="16000"
+              min="11"
+              step="1"
+            />
+          </label>
+          <label class="field"
+            >FFT
+            <select id="setting-fft-size" class="field-input">
+              <option>1024</option>
+              <option selected>2048</option>
+              <option>4096</option>
+              <option>8192</option>
+            </select>
+          </label>
+          <label class="field"
+            >Max bitrate (Mbps)<input
+              id="setting-bitrate"
+              class="field-input"
+              type="number"
+              value="12"
+              min="1"
+              max="60"
+          /></label>
+        </section>
+
+        <button
+          id="render-button"
+          class="button button-primary button-block"
+          disabled
+        >
+          Render video
+        </button>
+        <p id="status" class="status">Load audio files to start.</p>
+      </aside>
+
+      <main class="viewer">
+        <p class="viewer-empty">Add audio files to preview the layout.</p>
+
+        <section class="canvas-panel">
+          <canvas
+            id="preview-canvas"
+            class="canvas"
+            width="1280"
+            height="720"
+          ></canvas>
+        </section>
+
+        <section class="result-panel">
+          <video id="result-video" class="result-video" controls></video>
+          <div class="result-bar">
+            <a id="download-link" class="button button-accent"
+              >Download video</a
+            >
+            <p class="result-note">
+              Kept in memory until you change the tracks or render again.
+            </p>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div
+      class="render-overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Rendering video"
+    >
+      <div class="render-card">
+        <div id="progress-ring" class="progress-ring">
+          <span id="progress-percent" class="progress-percent">0%</span>
+        </div>
+        <p id="progress-remaining" class="progress-remaining">
+          Starting render...
+        </p>
+        <button id="stop-button" class="button">Stop rendering</button>
+      </div>
+    </div>
+  </body>
+</html>
